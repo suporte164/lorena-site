@@ -95,6 +95,7 @@ function AnimatedButton({
 export default function LandingPage() {
   const WEBHOOK_URL = "https://validacao.lcoadv.com.br/webhook/lead"
   const [formData, setFormData] = useState({ nome: "", whatsapp: "" })
+  const [authorizationAccepted, setAuthorizationAccepted] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [showMarquee, setShowMarquee] = useState(false)
@@ -168,6 +169,7 @@ export default function LandingPage() {
       whatsapp: phoneClean,
       firstName,
       lastName,
+      autorizacao: authorizationAccepted ? "sim" : "nao",
       origem: "site",
       pagina: typeof window !== "undefined" ? window.location.pathname : "/",
       timestamp: new Date().toISOString(),
@@ -179,10 +181,14 @@ export default function LandingPage() {
       setIsSubmitting(false)
       setIsModalOpen(false)
       setFormData({ nome: "", whatsapp: "" })
+      setAuthorizationAccepted(true)
     }, 1000)
   }
 
-  const openModal = () => setIsModalOpen(true)
+  const openModal = () => {
+    setAuthorizationAccepted(true)
+    setIsModalOpen(true)
+  }
 
   const googleReviews = [
     {
@@ -241,26 +247,53 @@ export default function LandingPage() {
                 <Label htmlFor="whatsapp-modal" className="text-[#1A1A1A] font-medium">
                   WhatsApp (com DDD)
                 </Label>
-                <Input
-                  id="whatsapp-modal"
-                  type="tel"
-                  required
-                  placeholder="(00) 00000-0000"
-                  value={formData.whatsapp}
-                  onChange={(e) =>
-                    setFormData({ ...formData, whatsapp: formatPhone(e.target.value) })
-                  }
-                  className="border-gray-300 focus:border-[#C5A059] focus:ring-[#C5A059]"
-                />
+                <div className="flex overflow-hidden rounded-md border border-gray-300 focus-within:border-[#C5A059] focus-within:ring-1 focus-within:ring-[#C5A059]">
+                  <span className="inline-flex items-center bg-[#F5F7FA] px-3 text-sm font-semibold text-[#0E66C2] border-r border-gray-300">
+                    +55
+                  </span>
+                  <Input
+                    id="whatsapp-modal"
+                    type="tel"
+                    required
+                    placeholder="(00) 00000-0000"
+                    value={formData.whatsapp}
+                    onChange={(e) =>
+                      setFormData({ ...formData, whatsapp: formatPhone(e.target.value) })
+                    }
+                    className="border-0 rounded-none focus-visible:ring-0"
+                  />
+                </div>
               </div>
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full group inline-flex items-center justify-center gap-3 bg-[#C5A059] hover:bg-[#D4B87A] text-[#1A1A1A] font-bold text-sm px-6 py-4 rounded-full transition-all duration-300 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              <label
+                htmlFor="authorization-modal"
+                className="flex items-start gap-3 rounded-lg bg-[#F1F4F8] px-3 py-3 text-sm text-[#4A4A4A]"
               >
-                <WhatsAppIcon className="w-5 h-5" />
-                <span>{isSubmitting ? "ENVIANDO..." : "RECEBER CONTATO NO WHATSAPP"}</span>
-              </button>
+                <input
+                  id="authorization-modal"
+                  type="checkbox"
+                  required
+                  checked={authorizationAccepted}
+                  onChange={(e) => setAuthorizationAccepted(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 accent-[#0E66C2]"
+                />
+                <span>Autorizo o uso dos meus dados para contato, conforme os termos de privacidade.</span>
+              </label>
+              <div className="grid grid-cols-2 gap-3 pt-1">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  className="inline-flex items-center justify-center rounded-2xl border border-[#BBD0E8] bg-white px-4 py-3 font-semibold text-[#4A4A4A] transition-colors hover:bg-[#F7FAFD]"
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="inline-flex items-center justify-center rounded-2xl bg-[#0E66C2] px-4 py-3 font-semibold text-white transition-colors hover:bg-[#0A57A7] disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {isSubmitting ? "Enviando..." : "Enviar contato"}
+                </button>
+              </div>
             </form>
           </div>
         </DialogContent>
@@ -595,12 +628,11 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#0A0A0A] text-white py-12 border-t border-[#D4AF37]/20">
-        <div className="container mx-auto px-4">
+      <footer className="bg-[#0B67BA] text-white border-t border-white/20">
+        <div className="container mx-auto px-4 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
-              {/* Coluna 1 - Identidade e Especialização */}
-              <div className="sm:col-span-2 lg:col-span-1">
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+              <div className="lg:pr-6 lg:border-r lg:border-white/20">
                 <Image
                   src="/logo-lorena-carvalho.svg"
                   alt="Lorena Carvalho Advocacia"
@@ -608,114 +640,110 @@ export default function LandingPage() {
                   height={45}
                   className="h-12 w-auto mb-4"
                 />
-                <p className="text-white/80 text-sm mb-3 text-balance">
-                  Advocacia Especializada em Indenizações e Defesa do Passageiro Aéreo
-                </p>
-                <p className="text-white/50 text-xs">
-                  CNPJ: 57.595.927/0001-39
+                <p className="text-white/85 text-sm leading-relaxed text-pretty">
+                  Soluções completas em defesa do passageiro aéreo para você viajar com segurança jurídica.
                 </p>
               </div>
 
-              {/* Coluna 2 - Serviços */}
-              <nav aria-label="Serviços">
-                <h4 className="font-serif font-semibold text-[#D4AF37] mb-4">Resolvemos problemas com:</h4>
-                <ul className="space-y-2 text-white/70 text-sm">
-                  <li><a href="/" className="hover:text-[#D4AF37] transition-colors">Voo Cancelado</a></li>
-                  <li><a href="/" className="hover:text-[#D4AF37] transition-colors">Atraso de Voo</a></li>
-                  <li><a href="/" className="hover:text-[#D4AF37] transition-colors">Mala Extraviada</a></li>
-                  <li><a href="/" className="hover:text-[#D4AF37] transition-colors">Overbooking</a></li>
-                  <li><a href="/" className="hover:text-[#D4AF37] transition-colors">Indenização de Viagem</a></li>
+              <nav aria-label="Links rápidos" className="lg:px-6 lg:border-r lg:border-white/20">
+                <h4 className="font-serif text-lg font-semibold mb-4">Links Rápidos</h4>
+                <ul className="space-y-2 text-sm text-white/90">
+                  <li><a href="/" className="hover:text-white transition-colors">Voo Cancelado</a></li>
+                  <li><a href="/" className="hover:text-white transition-colors">Atraso de Voo</a></li>
+                  <li><a href="/" className="hover:text-white transition-colors">Mala Extraviada</a></li>
+                  <li><a href="/" className="hover:text-white transition-colors">Overbooking</a></li>
+                  <li><a href="/" className="hover:text-white transition-colors">Sobre nós</a></li>
                 </ul>
               </nav>
 
-              {/* Coluna 3 - Contato */}
-              <address className="not-italic">
-                <h4 className="font-serif font-semibold text-[#D4AF37] mb-4">Contato</h4>
-                <div className="space-y-2 text-white/70 text-sm">
+              <address className="not-italic lg:px-6 lg:border-r lg:border-white/20">
+                <h4 className="font-serif text-lg font-semibold mb-4">Contato</h4>
+                <div className="space-y-3 text-sm text-white/90">
                   <a
                     href="https://www.google.com/maps/place/Lorena+Carvalho+Advocacia/@-23.618111,-46.6405399,17z/data=!3m1!4b1!4m6!3m5!1s0x94ce5b94cf4fb1a1:0x79a09f22027080e6!8m2!3d-23.618111!4d-46.637965!16s%2Fg%2F11wjp87bvl?entry=ttu&g_ep=EgoyMDI2MDMxNS4wIKXMDSoASAFQAw%3D%3D"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block hover:text-[#D4AF37] transition-colors"
+                    className="flex items-start gap-2 hover:text-white transition-colors"
                   >
-                    <p>R. Pereira Estéfano, 114</p>
-                    <p>Vila da Saúde, São Paulo - SP</p>
-                    <p>CEP: 04144-070</p>
+                    <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
+                    <span>R. Pereira Estéfano, 114 - Vila da Saúde, São Paulo - SP, 04144-070</span>
                   </a>
-                  <a
-                    href="tel:+5561996327789"
-                    className="block hover:text-[#D4AF37] transition-colors pt-2"
-                  >
-                    (61) 99632-7789
+                  <a href="tel:+5561996327789" className="flex items-center gap-2 hover:text-white transition-colors">
+                    <Phone className="w-4 h-4 shrink-0" />
+                    <span>(61) 99632-7789</span>
+                  </a>
+                  <a href="https://wa.me/5561996327789" className="flex items-center gap-2 hover:text-white transition-colors">
+                    <MessageCircle className="w-4 h-4 shrink-0" />
+                    <span>(61) 99632-7789 (WhatsApp)</span>
                   </a>
                 </div>
               </address>
 
-              {/* Coluna 4 - Horário */}
-              <div>
-                <h4 className="font-serif font-semibold text-[#D4AF37] mb-4">Horário</h4>
-                <div className="space-y-2 text-white/70 text-sm">
-                  <p>Segunda a Sexta</p>
-                  <p>08h às 19h</p>
-                  <p className="text-[#D4AF37] font-medium mt-3">Suporte emergencial disponível</p>
+              <div className="lg:pl-6">
+                <h4 className="font-serif text-lg font-semibold mb-4">Horário de funcionamento</h4>
+                <div className="text-sm text-white/90 space-y-2">
+                  <p className="flex justify-between gap-4"><span>Segunda a Sexta</span><span>08:00-19:00</span></p>
+                  <p className="flex justify-between gap-4"><span>Sábado e Domingo</span><span>Fechado</span></p>
+                  <p className="pt-2 text-white font-medium">Suporte emergencial disponível</p>
                 </div>
               </div>
+            </div>
 
-              {/* Coluna 5 - Redes Sociais */}
-              <div>
-                <h4 className="font-serif font-semibold text-[#D4AF37] mb-4">Redes Sociais</h4>
-                <div className="flex gap-4">
+            <div className="mt-8 border-t border-white/20 pt-6">
+              <div className="rounded-xl overflow-hidden border border-white/30 shadow-xl">
+                <iframe
+                  title="Mapa do escritório"
+                  src="https://www.google.com/maps?q=R.+Pereira+Est%C3%A9fano,+114,+Vila+da+Sa%C3%BAde,+S%C3%A3o+Paulo+-+SP,+04144-070&output=embed"
+                  className="w-full h-64 md:h-72"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+              <div className="mt-3">
+                <a
+                  href="https://www.google.com/maps/place/Lorena+Carvalho+Advocacia/@-23.618111,-46.6405399,17z/data=!3m1!4b1!4m6!3m5!1s0x94ce5b94cf4fb1a1:0x79a09f22027080e6!8m2!3d-23.618111!4d-46.637965!16s%2Fg%2F11wjp87bvl?entry=ttu&g_ep=EgoyMDI2MDMxNS4wIKXMDSoASAFQAw%3D%3D"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center rounded-full bg-white/15 px-4 py-2 text-sm font-medium hover:bg-white/25 transition-colors"
+                >
+                  Abrir no Maps
+                </a>
+              </div>
+            </div>
+
+            <div className="mt-8 border-t border-white/20 pt-5">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex items-center gap-3">
                   <a
                     href="https://www.instagram.com/advogadalorenacarvalho/"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Instagram de Lorena Carvalho"
-                    className="text-[#D4AF37] hover:text-[#E5C068] transition-colors"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/15 hover:bg-white/25 transition-colors"
                   >
-                    <Instagram className="w-6 h-6" />
+                    <Instagram className="w-5 h-5" />
                   </a>
                   <a
                     href="https://www.facebook.com/advogadalorenacarvalho/"
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Facebook de Lorena Carvalho"
-                    className="text-[#D4AF37] hover:text-[#E5C068] transition-colors"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/15 hover:bg-white/25 transition-colors"
                   >
-                    <Facebook className="w-6 h-6" />
-                  </a>
-                  <a
-                    href="https://share.google/EMvSGuQ7iemTCpoGc"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Google Meu Negócio de Lorena Carvalho"
-                    className="text-[#D4AF37] hover:text-[#E5C068] transition-colors"
-                  >
-                    <MapPin className="w-6 h-6" />
+                    <Facebook className="w-5 h-5" />
                   </a>
                 </div>
+                <p className="text-sm text-white/85">
+                  © 2026 Lorena Carvalho Advocacia. Todos os direitos reservados.
+                </p>
               </div>
-            </div>
-
-            {/* Links Legais */}
-            <div className="border-t border-[#D4AF37]/20 pt-6 pb-4">
-              <nav className="flex justify-center gap-6 text-xs text-white/50" aria-label="Links legais">
-                <a href="/" className="hover:text-[#D4AF37] transition-colors">Política de Privacidade</a>
-                <a href="/" className="hover:text-[#D4AF37] transition-colors">Termos de Uso</a>
-              </nav>
-            </div>
-
-            {/* Copyright e Créditos */}
-            <div className="border-t border-[#D4AF37]/10 pt-6 text-center">
-              <p className="text-white/50 text-sm mb-2">
-                © 2026 Lorena Carvalho Advocacia. Todos os direitos reservados.
-              </p>
-              <p className="text-white/40 text-xs">
-                Desenvolvido por{' '}
+              <p className="mt-4 text-center text-xs text-white/70">
+                Desenvolvido por{" "}
                 <a
                   href="https://p12digital.com.br"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#D4AF37] transition-colors"
+                  className="underline underline-offset-2 hover:text-white transition-colors"
                 >
                   P12 Digital
                 </a>
