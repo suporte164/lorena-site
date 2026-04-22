@@ -93,7 +93,7 @@ function AnimatedButton({
 }
 
 export default function LandingPage() {
-  const WEBHOOK_URL = "https://validacao.lcoadv.com.br/webhook/lead"
+  const WEBHOOK_URL = "/api/webhook/lead"
   const [formData, setFormData] = useState({ nome: "", whatsapp: "" })
   const [authorizationAccepted, setAuthorizationAccepted] = useState(true)
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -126,16 +126,17 @@ export default function LandingPage() {
   }
 
   const sendLeadToWebhook = async (payload: Record<string, string>) => {
-    const body = new URLSearchParams(payload)
-
-    await fetch(WEBHOOK_URL, {
+    const res = await fetch(WEBHOOK_URL, {
       method: "POST",
-      mode: "no-cors",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
-      body,
+      body: JSON.stringify(payload),
     })
+
+    if (!res.ok) {
+      throw new Error("Falha no relay do webhook")
+    }
   }
 
   const handleSubmit = (e: React.FormEvent) => {
