@@ -628,11 +628,11 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#0B67BA] text-white border-t border-white/20">
+      <footer className="bg-[#0A0A0A] text-white border-t border-[#D4AF37]/20">
         <div className="container mx-auto px-4 py-10 md:py-12">
           <div className="max-w-6xl mx-auto">
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-              <div className="lg:pr-6 lg:border-r lg:border-white/20">
+              <div className="lg:pr-6 lg:border-r lg:border-[#D4AF37]/20">
                 <Image
                   src="/logo-lorena-carvalho.svg"
                   alt="Lorena Carvalho Advocacia"
@@ -640,39 +640,39 @@ export default function LandingPage() {
                   height={45}
                   className="h-12 w-auto mb-4"
                 />
-                <p className="text-white/85 text-sm leading-relaxed text-pretty">
+                <p className="text-white/80 text-sm leading-relaxed text-pretty">
                   Soluções completas em defesa do passageiro aéreo para você viajar com segurança jurídica.
                 </p>
               </div>
 
-              <nav aria-label="Links rápidos" className="lg:px-6 lg:border-r lg:border-white/20">
-                <h4 className="font-serif text-lg font-semibold mb-4">Links Rápidos</h4>
-                <ul className="space-y-2 text-sm text-white/90">
-                  <li><a href="/" className="hover:text-white transition-colors">Voo Cancelado</a></li>
-                  <li><a href="/" className="hover:text-white transition-colors">Atraso de Voo</a></li>
-                  <li><a href="/" className="hover:text-white transition-colors">Mala Extraviada</a></li>
-                  <li><a href="/" className="hover:text-white transition-colors">Overbooking</a></li>
-                  <li><a href="/" className="hover:text-white transition-colors">Sobre nós</a></li>
+              <nav aria-label="Links rápidos" className="lg:px-6 lg:border-r lg:border-[#D4AF37]/20">
+                <h4 className="font-serif text-lg font-semibold text-[#D4AF37] mb-4">Links Rápidos</h4>
+                <ul className="space-y-2 text-sm text-white/70">
+                  <li><a href="/" className="hover:text-[#D4AF37] transition-colors">Voo Cancelado</a></li>
+                  <li><a href="/" className="hover:text-[#D4AF37] transition-colors">Atraso de Voo</a></li>
+                  <li><a href="/" className="hover:text-[#D4AF37] transition-colors">Mala Extraviada</a></li>
+                  <li><a href="/" className="hover:text-[#D4AF37] transition-colors">Overbooking</a></li>
+                  <li><a href="/" className="hover:text-[#D4AF37] transition-colors">Sobre nós</a></li>
                 </ul>
               </nav>
 
-              <address className="not-italic lg:px-6 lg:border-r lg:border-white/20">
-                <h4 className="font-serif text-lg font-semibold mb-4">Contato</h4>
-                <div className="space-y-3 text-sm text-white/90">
+              <address className="not-italic lg:px-6 lg:border-r lg:border-[#D4AF37]/20">
+                <h4 className="font-serif text-lg font-semibold text-[#D4AF37] mb-4">Contato</h4>
+                <div className="space-y-3 text-sm text-white/70">
                   <a
                     href="https://www.google.com/maps/place/Lorena+Carvalho+Advocacia/@-23.618111,-46.6405399,17z/data=!3m1!4b1!4m6!3m5!1s0x94ce5b94cf4fb1a1:0x79a09f22027080e6!8m2!3d-23.618111!4d-46.637965!16s%2Fg%2F11wjp87bvl?entry=ttu&g_ep=EgoyMDI2MDMxNS4wIKXMDSoASAFQAw%3D%3D"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-start gap-2 hover:text-white transition-colors"
+                    className="flex items-start gap-2 hover:text-[#D4AF37] transition-colors"
                   >
                     <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
                     <span>R. Pereira Estéfano, 114 - Vila da Saúde, São Paulo - SP, 04144-070</span>
                   </a>
-                  <a href="tel:+5561996327789" className="flex items-center gap-2 hover:text-white transition-colors">
+                  <a href="tel:+5561996327789" className="flex items-center gap-2 hover:text-[#D4AF37] transition-colors">
                     <Phone className="w-4 h-4 shrink-0" />
                     <span>(61) 99632-7789</span>
                   </a>
-                  <a href="https://wa.me/5561996327789" className="flex items-center gap-2 hover:text-white transition-colors">
+                  <a href="https://wa.me/5561996327789" className="flex items-center gap-2 hover:text-[#D4AF37] transition-colors">
                     <MessageCircle className="w-4 h-4 shrink-0" />
                     <span>(61) 99632-7789 (WhatsApp)</span>
                   </a>
@@ -680,17 +680,17 @@ export default function LandingPage() {
               </address>
 
               <div className="lg:pl-6">
-                <h4 className="font-serif text-lg font-semibold mb-4">Horário de funcionamento</h4>
-                <div className="text-sm text-white/90 space-y-2">
+                <h4 className="font-serif text-lg font-semibold text-[#D4AF37] mb-4">Horário de funcionamento</h4>
+                <div className="text-sm text-white/70 space-y-2">
                   <p className="flex justify-between gap-4"><span>Segunda a Sexta</span><span>08:00-19:00</span></p>
                   <p className="flex justify-between gap-4"><span>Sábado e Domingo</span><span>Fechado</span></p>
-                  <p className="pt-2 text-white font-medium">Suporte emergencial disponível</p>
+                  <p className="pt-2 text-[#D4AF37] font-medium">Suporte emergencial disponível</p>
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 border-t border-white/20 pt-6">
-              <div className="rounded-xl overflow-hidden border border-white/30 shadow-xl">
+            <div className="mt-8 border-t border-[#D4AF37]/20 pt-6">
+              <div className="rounded-xl overflow-hidden border border-[#D4AF37]/30 shadow-xl">
                 <iframe
                   title="Mapa do escritório"
                   src="https://www.google.com/maps?q=R.+Pereira+Est%C3%A9fano,+114,+Vila+da+Sa%C3%BAde,+S%C3%A3o+Paulo+-+SP,+04144-070&output=embed"
@@ -704,14 +704,14 @@ export default function LandingPage() {
                   href="https://www.google.com/maps/place/Lorena+Carvalho+Advocacia/@-23.618111,-46.6405399,17z/data=!3m1!4b1!4m6!3m5!1s0x94ce5b94cf4fb1a1:0x79a09f22027080e6!8m2!3d-23.618111!4d-46.637965!16s%2Fg%2F11wjp87bvl?entry=ttu&g_ep=EgoyMDI2MDMxNS4wIKXMDSoASAFQAw%3D%3D"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center rounded-full bg-white/15 px-4 py-2 text-sm font-medium hover:bg-white/25 transition-colors"
+                  className="inline-flex items-center rounded-full bg-[#D4AF37]/15 px-4 py-2 text-sm font-medium text-[#D4AF37] hover:bg-[#D4AF37]/25 transition-colors"
                 >
                   Abrir no Maps
                 </a>
               </div>
             </div>
 
-            <div className="mt-8 border-t border-white/20 pt-5">
+            <div className="mt-8 border-t border-[#D4AF37]/20 pt-5">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3">
                   <a
@@ -719,7 +719,7 @@ export default function LandingPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Instagram de Lorena Carvalho"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/15 hover:bg-white/25 transition-colors"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#D4AF37]/10 text-[#D4AF37] hover:bg-[#D4AF37]/20 transition-colors"
                   >
                     <Instagram className="w-5 h-5" />
                   </a>
@@ -728,22 +728,22 @@ export default function LandingPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Facebook de Lorena Carvalho"
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/15 hover:bg-white/25 transition-colors"
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-[#D4AF37]/10 text-[#D4AF37] hover:bg-[#D4AF37]/20 transition-colors"
                   >
                     <Facebook className="w-5 h-5" />
                   </a>
                 </div>
-                <p className="text-sm text-white/85">
+                <p className="text-sm text-white/50">
                   © 2026 Lorena Carvalho Advocacia. Todos os direitos reservados.
                 </p>
               </div>
-              <p className="mt-4 text-center text-xs text-white/70">
+              <p className="mt-4 text-center text-xs text-white/40">
                 Desenvolvido por{" "}
                 <a
                   href="https://p12digital.com.br"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline underline-offset-2 hover:text-white transition-colors"
+                  className="underline underline-offset-2 hover:text-[#D4AF37] transition-colors"
                 >
                   P12 Digital
                 </a>
