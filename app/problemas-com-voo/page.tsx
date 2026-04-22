@@ -139,7 +139,7 @@ export default function LandingPage() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
@@ -151,13 +151,22 @@ export default function LandingPage() {
     // Limpar telefone para apenas números
     const phoneClean = formData.whatsapp.replace(/\D/g, "")
 
-    // Disparar tracking de Lead no sucesso do formulário
-    if (typeof window !== "undefined" && (window as typeof window & { trackLeadHighQuality?: (data: Record<string, string>) => void }).trackLeadHighQuality) {
-      (window as typeof window & { trackLeadHighQuality: (data: Record<string, string>) => void }).trackLeadHighQuality({
+    // Dispara CAPI e reaproveita o mesmo event_id no webhook para correlação/desduplicação.
+    let capiEventId = ""
+    if (
+      typeof window !== "undefined" &&
+      (window as typeof window & {
+        trackLeadHighQuality?: (data: Record<string, string>) => Promise<{ event_id?: string } | null> | null
+      }).trackLeadHighQuality
+    ) {
+      const result = await (window as typeof window & {
+        trackLeadHighQuality: (data: Record<string, string>) => Promise<{ event_id?: string } | null> | null
+      }).trackLeadHighQuality({
         phone: phoneClean,
         firstName: firstName,
         lastName: lastName,
       })
+      capiEventId = (result && typeof result.event_id === "string" && result.event_id) || ""
     }
 
     const message = encodeURIComponent(
@@ -166,6 +175,7 @@ export default function LandingPage() {
     window.open(`https://wa.me/5561996327789?text=${message}`, "_blank")
 
     void sendLeadToWebhook({
+      event_id: capiEventId,
       nome: formData.nome.trim(),
       whatsapp: phoneClean,
       firstName,

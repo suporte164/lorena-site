@@ -42,9 +42,9 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               function trackLeadHighQuality(data) {
-                if (!window.MetaTracker?.track) return;
+                if (!window.MetaTracker?.track) return Promise.resolve(null);
                 
-                window.MetaTracker.track("Lead", {
+                return window.MetaTracker.track("Lead", {
                   custom_data: {
                     form_name: "contato_principal",
                     channel: "whatsapp",
@@ -65,6 +65,7 @@ export default function RootLayout({
                   }
                 }).catch(function (e) {
                   console.warn("MetaTracker Lead error:", e);
+                  return null;
                 });
               }
             `
