@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import './globals.css'
+import { CookieBanner } from '@/components/CookieBanner'
 
 const _playfair = Playfair_Display({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 const _inter = Inter({ subsets: ["latin"] });
@@ -151,6 +152,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased">
         {children}
+        <CookieBanner />
       </body>
     </html>
   )
