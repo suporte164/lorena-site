@@ -1,18 +1,8 @@
 import { NextResponse } from "next/server";
 
-const DEFAULT_WEBHOOK_URL = "https://python-auto-relatorio-trafego.axmxa0.easypanel.host/site-new-lead";
+const N8N_WEBHOOK_URL = "https://n8n-webhook.axmxa0.easypanel.host/webhook/lp";
 
 export async function POST(request: Request) {
-  const webhookUrl = process.env.WEBHOOK_URL || DEFAULT_WEBHOOK_URL;
-  const webhookToken = (process.env.WEBHOOK_TOKEN || "").trim();
-
-  if (!webhookToken) {
-    return NextResponse.json(
-      { ok: false, error: "WEBHOOK_TOKEN ausente no ambiente do site." },
-      { status: 500 }
-    );
-  }
-
   let payload = {};
   try {
     payload = await request.json();
@@ -24,12 +14,9 @@ export async function POST(request: Request) {
   }
 
   try {
-    const res = await fetch(webhookUrl, {
+    const res = await fetch(N8N_WEBHOOK_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${webhookToken}`,
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
 
