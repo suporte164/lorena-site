@@ -31,6 +31,7 @@ import {
   Facebook,
   ExternalLink,
 } from "lucide-react"
+import { captureTracking, EMPTY_TRACKING, type TrackingParams } from "@/lib/tracking"
 
 // Ícone do WhatsApp
 function WhatsAppIcon({ className }: { className?: string }) {
@@ -99,7 +100,12 @@ export default function LandingPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [showMarquee, setShowMarquee] = useState(false)
+  const [tracking, setTracking] = useState<TrackingParams>(EMPTY_TRACKING)
   const heroRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    setTracking(captureTracking())
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -184,6 +190,7 @@ export default function LandingPage() {
       origem: "site",
       pagina: typeof window !== "undefined" ? window.location.pathname : "/",
       timestamp: new Date().toISOString(),
+      ...tracking,
     }).catch(() => {
       // Não interrompe o fluxo do usuário se o webhook falhar.
     })
