@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const N8N_WEBHOOK_URL = "https://n8n-webhook.axmxa0.easypanel.host/webhook/lp";
+const N8N_WEBHOOK_URL = "https://n8n.sitespdoze.com.br/webhook/lp";
 
 export async function POST(request: Request) {
   let payload = {};
